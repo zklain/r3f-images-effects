@@ -8,7 +8,7 @@ function App() {
       <Canvas>
         <OrbitControls makeDefault />
         <ambientLight />
-        <color attach="background" args={['#2d1b50']} />
+        <color attach="background" args={['#000000']} />
         <Box args={[1, 1, 1]}>
           <meshStandardMaterial color="white" />
         </Box>
