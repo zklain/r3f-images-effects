@@ -5,7 +5,8 @@ import { Scene } from './Scene'
 import { Box, PerspectiveCamera } from '@react-three/drei'
 import { Mesh } from 'three'
 
-const Loader = () => {
+// TODO: move out
+export const Loader = () => {
   const ref = useRef<Mesh>(null!)
 
   useFrame(() => {
@@ -13,18 +14,17 @@ const Loader = () => {
     ref.current.rotation.y += 0.01
   })
   return (
-    <Box ref={ref} args={[1, 1, 1, 64, 64, 64]}>
-      <meshWireframeMaterial />
-    </Box>
+    <mesh ref={ref}>
+      <boxGeometry args={[1, 1, 1, 64, 64, 64]} />
+      <meshBasicMaterial wireframe />
+    </mesh>
   )
 }
 
 function App() {
   return (
     <div className="App">
-      <Canvas>
-        <ambientLight />
-        <PerspectiveCamera />
+      <Canvas shadows camera={{ fov: 30, position: [5.5, 2.75, 5.5] }}>
         <React.Suspense fallback={<Loader />}>
           <Scene />
         </React.Suspense>

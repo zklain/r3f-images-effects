@@ -2,10 +2,11 @@ import { useSpring } from '@react-spring/three'
 import { useCursor } from '@react-three/drei'
 import { MeshProps, extend, useFrame } from '@react-three/fiber'
 import { useCallback, useRef, useState } from 'react'
-import { Texture } from 'three'
+import { DoubleSide, Texture } from 'three'
 import { AnimatedImageMaterial } from './DistortedImageMaterial'
 import { DistortedImageMaterialRefType } from './types'
 import { geometry } from 'maath'
+
 extend(geometry)
 
 export const GOLDEN_RATIO = 1.618
@@ -35,7 +36,7 @@ interface IFrameProps extends MeshProps {
 }
 
 export const ImageCard = ({
-  size = 3,
+  size = 1,
   image,
   noiseScale = 3,
   noiseSpeed = 0.5,
@@ -68,8 +69,10 @@ export const ImageCard = ({
     <mesh onPointerOver={onPointerOver} onPointerOut={onPointerOut} {...props}>
       {/* <planeGeometry args={[size, size * GOLDEN_RATIO, 256, 256]} /> */}
       <roundedPlaneGeometry args={[size, size * GOLDEN_RATIO, 0.1]} />
+      {/* <boxGeometry args={[size, size * GOLDEN_RATIO, 0.01]} /> */}
       {/* @ts-ignore it's ok */}
       <AnimatedImageMaterial
+        side={DoubleSide}
         ref={matRef}
         {...springs}
         uScale={noiseScale}
