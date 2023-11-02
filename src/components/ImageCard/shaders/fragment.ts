@@ -1,8 +1,8 @@
-import { REVISION } from 'three'
-import { snoise } from '../../../utils/noise.shader'
+import { cnoise } from '../../../utils/noise.shader'
+import { version } from '../../../utils/version'
 
 export const fragmentShader = /*glsl*/ `
-    ${snoise}
+    ${cnoise}
 
     uniform float uTime;
     uniform float uSpeed;
@@ -20,7 +20,7 @@ export const fragmentShader = /*glsl*/ `
         // scroll texture
         scaledUv += uTime * uSpeed;
 
-        float noiseVal = snoise(scaledUv);
+        float noiseVal = cnoise(scaledUv);
 
         vec2 uv = vUv + noiseVal * uNoiseStrength;
 
@@ -29,9 +29,7 @@ export const fragmentShader = /*glsl*/ `
 
         #include <tonemapping_fragment>
         #include <${
-          parseInt(REVISION.replace(/\D+/g, '')) >= 154
-            ? 'colorspace_fragment'
-            : 'encodings_fragment'
+          version >= 154 ? 'colorspace_fragment' : 'encodings_fragment'
         }>
     }
 `

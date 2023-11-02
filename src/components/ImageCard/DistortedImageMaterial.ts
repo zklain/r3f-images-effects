@@ -5,6 +5,9 @@ import { vertexShader } from './shaders/vertex'
 import { fragmentShader } from './shaders/fragment'
 import { animated } from '@react-spring/three'
 
+// TODO: extend https://github.dev/pmndrs/drei#image
+// TODO: add max noise
+
 const DistortedImageMaterial = shaderMaterial(
   {
     uTime: 0,
