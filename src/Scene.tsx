@@ -1,26 +1,11 @@
-import {
-  AccumulativeShadows,
-  Box,
-  CameraControls,
-  Center,
-  Environment,
-  Grid,
-  OrbitControls,
-  PerspectiveCamera,
-  Plane,
-  RandomizedLight,
-  SoftShadows,
-  Text,
-  useTexture,
-} from '@react-three/drei'
-import { useControls } from 'leva'
-import { memo, useEffect, useRef, useState } from 'react'
-import './App.css'
-import { brokebackMountain, hubabuba, neon, sunset } from './assets'
-import { GOLDEN_RATIO, ImageCard } from './components/ImageCard'
-import { Object3D, Quaternion, Vector3 } from 'three'
-import { ThreeElements, ThreeEvent, useFrame } from '@react-three/fiber'
+import { Environment, SoftShadows, Text, useTexture } from '@react-three/drei'
+import { ThreeEvent, useFrame } from '@react-three/fiber'
 import { easing } from 'maath'
+import { useRef } from 'react'
+import { Object3D, Quaternion, Vector3 } from 'three'
+import { hubabuba, neon, sunset } from './assets'
+import { GroundGrid } from './components/GroundGrid'
+import { ImageCard } from './components/ImageCard'
 
 // const Shadows = memo(() => (
 //   <AccumulativeShadows
@@ -46,6 +31,7 @@ import { easing } from 'maath'
 // TODO: LAYOUT: horizontal || vertical if mobile
 // TODO: add more effects => Follow mouse, zesnulen
 // TODO: onClick focuses the card
+// TODO: switching scenes
 
 const INITIAL_CAMERA_POSITION: [x: number, y: number, z: number] = [6, 3, 8]
 
@@ -53,12 +39,7 @@ export const Scene = ({
   q = new Quaternion(),
   p = new Vector3(...INITIAL_CAMERA_POSITION),
 }) => {
-  const [neonTexture, sunsetTexture, horseImage, computer] = useTexture([
-    neon,
-    sunset,
-    brokebackMountain,
-    hubabuba,
-  ])
+  const [computer] = useTexture([hubabuba])
 
   const selected = useRef<Object3D>()
 
@@ -80,13 +61,12 @@ export const Scene = ({
     }
   }
 
-  const onPointerMissed = (e) => {
-    // TODO: this is the default camera position
+  const onPointerMissed = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation()
     resetCamera()
   }
 
-  // TODO: try controls
+  // TODO: try CameraControls
 
   useFrame((state, dt) => {
     easing.damp3(state.camera.position, p, 0.4, dt)
@@ -117,19 +97,7 @@ export const Scene = ({
       {/* <Box position={[2, 0, 0]} castShadow /> */}
       <color attach="background" args={['#9e9e9e']} />
       <Environment preset="city" />
-      <Grid
-        position={[0, -0.81, 0]}
-        args={[10.5, 10.5]}
-        cellSize={0.5}
-        cellThickness={1}
-        cellColor="#7f7f7f"
-        sectionSize={1}
-        sectionThickness={1}
-        sectionColor="#797979"
-        fadeDistance={25}
-        fadeStrength={1}
-        infiniteGrid
-      />
+      <GroundGrid />
       {/* <Shadows /> */}
       {/* <OrbitControls makeDefault /> */}
       {/* <pointLight
