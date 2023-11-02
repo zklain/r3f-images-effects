@@ -65,10 +65,9 @@ export const ImageCard = ({
     matRef.current.uTime = state.clock.getElapsedTime()
   })
 
-  // TODO: extend JSX
   return (
     <mesh onPointerOver={onPointerOver} onPointerOut={onPointerOut} {...props}>
-      {/* @ts-ignore it's ok */}
+      {/* @ts-ignore // todo: extend types */}
       <roundedPlaneGeometry args={[size, size * GOLDEN_RATIO, 0.1]} />
       {/* @ts-ignore it's ok */}
       <AnimatedImageMaterial

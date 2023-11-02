@@ -1,27 +1,36 @@
-import { Environment, SoftShadows, Text, useTexture } from '@react-three/drei'
+import {
+  AccumulativeShadows,
+  Environment,
+  RandomizedLight,
+  SoftShadows,
+  Text,
+  useTexture,
+} from '@react-three/drei'
 import { ThreeEvent, useFrame } from '@react-three/fiber'
 import { easing } from 'maath'
-import { useRef } from 'react'
+import { memo, useRef } from 'react'
 import { Object3D, Quaternion, Vector3 } from 'three'
 import { hubabuba, neon, sunset } from './assets'
 import { GroundGrid } from './components/GroundGrid'
 import { ImageCard } from './components/ImageCard'
 
-// const Shadows = memo(() => (
-//   <AccumulativeShadows
-//     position={[0, -0.811, 0]}
-//     temporal
-//     frames={100}
-//     color="#3c3c3c"
-//     colorBlend={0.5}
-//     alphaTest={0.75}
-//     scale={10}
-//     opacity={0.8}
-//     toneMapped={true}
-//   >
-//     <RandomizedLight amount={10} radius={4} size={10} position={[3, 4, 5]} />
-//   </AccumulativeShadows>
-// ))
+const Shadows = memo(() => (
+  <AccumulativeShadows
+    position={[0, -0.811, 0]}
+    temporal
+    frames={100}
+    color="#3c3c3c"
+    colorBlend={1}
+    alphaTest={0.75}
+    scale={10}
+    opacity={0.8}
+    toneMapped={true}
+  >
+    <RandomizedLight amount={10} radius={4} size={10} position={[5, 5, -1]} />
+  </AccumulativeShadows>
+))
+
+// TODO: move card up, keep ground at 0
 // TODO: aspect ratio (add a landscape photo image)
 // TODO: try with CSM material
 // TODO:  load image from url
@@ -84,7 +93,6 @@ export const Scene = ({
       >
         Distorted Image
       </Text>
-      {/* </Center> */}
       <group onClick={onClick} onPointerMissed={onPointerMissed}>
         <ImageCard
           size={1}
@@ -94,7 +102,6 @@ export const Scene = ({
           receiveShadow
         />
       </group>
-      {/* <Box position={[2, 0, 0]} castShadow /> */}
       <color attach="background" args={['#9e9e9e']} />
       <Environment preset="city" />
       <GroundGrid />
@@ -103,7 +110,7 @@ export const Scene = ({
       {/* <pointLight
         color="#ffffff"
         position={[0, 5, 5]}
-        intensity={0.3}
+        intensity={1}
         castShadow
       /> */}
       {/* <CameraControls /> */}

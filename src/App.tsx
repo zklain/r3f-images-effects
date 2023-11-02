@@ -7,7 +7,13 @@ import { Loader } from './components/Loader'
 function App() {
   return (
     <div className="App">
-      <Canvas shadows camera={{ fov: 30, position: [6, 3, 8] }}>
+      <header className="header">
+        <h1>R3F Effects</h1>
+        <nav>
+          <a />
+        </nav>
+      </header>
+      <Canvas shadows camera={{ fov: 40, position: [6, 3, 8] }}>
         <React.Suspense fallback={<Loader />}>
           <Scene />
         </React.Suspense>
