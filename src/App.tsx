@@ -1,9 +1,8 @@
 import { Canvas, useFrame } from '@react-three/fiber'
 import React, { useRef } from 'react'
+import { Mesh } from 'three'
 import './App.css'
 import { Scene } from './Scene'
-import { Box, PerspectiveCamera } from '@react-three/drei'
-import { Mesh } from 'three'
 
 // TODO: move out
 export const Loader = () => {
@@ -15,7 +14,7 @@ export const Loader = () => {
   })
   return (
     <mesh ref={ref}>
-      <boxGeometry args={[1, 1, 1, 64, 64, 64]} />
+      <boxGeometry args={[1, 1, 1, 16, 16, 16]} />
       <meshBasicMaterial wireframe />
     </mesh>
   )
