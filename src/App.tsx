@@ -24,7 +24,7 @@ export const Loader = () => {
 function App() {
   return (
     <div className="App">
-      <Canvas shadows camera={{ fov: 30, position: [5.5, 2.75, 5.5] }}>
+      <Canvas shadows camera={{ fov: 30, position: [6, 3, 8] }}>
         <React.Suspense fallback={<Loader />}>
           <Scene />
         </React.Suspense>

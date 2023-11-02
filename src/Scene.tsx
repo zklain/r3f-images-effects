@@ -51,9 +51,9 @@ export const Scene = () => {
   return (
     <>
       <Text
-        scale={0.4}
-        color="#5a5a5a"
-        position={[0, -0.8, 1]}
+        scale={0.5}
+        color="#6c6c6c"
+        position={[0, -0.8, 1.02]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
         Distorted Image
