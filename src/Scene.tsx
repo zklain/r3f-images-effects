@@ -8,6 +8,13 @@ import './App.css'
 import { brokebackMountain, neon, sunset } from './assets'
 import { ImageCard } from './components/ImageCard'
 
+// TODO: add
+// TODO: aspect ratio (add a landscape photo image)
+// TODO: try csm materials animated with react spring
+// TODO: correct animation timing
+// todo: change bg color
+// TODO: LAYOUT: horizontal || vertical if mobile
+// TODO: add more effects => Follow mouse, zesnulen
 export const Scene = () => {
   const [neonTexture, sunsetTexture, horseImage] = useTexture([
     neon,

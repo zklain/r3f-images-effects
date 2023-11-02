@@ -1,10 +1,12 @@
 import { useSpring } from '@react-spring/three'
 import { useCursor } from '@react-three/drei'
-import { MeshProps, useFrame } from '@react-three/fiber'
+import { MeshProps, extend, useFrame } from '@react-three/fiber'
 import { useCallback, useRef, useState } from 'react'
 import { Texture } from 'three'
 import { AnimatedImageMaterial } from './DistortedImageMaterial'
 import { DistortedImageMaterialRefType } from './types'
+import { geometry } from 'maath'
+extend(geometry)
 
 export const GOLDEN_RATIO = 1.618
 
@@ -64,7 +66,8 @@ export const ImageCard = ({
 
   return (
     <mesh onPointerOver={onPointerOver} onPointerOut={onPointerOut} {...props}>
-      <planeGeometry args={[size, size * GOLDEN_RATIO, 256, 256]} />
+      {/* <planeGeometry args={[size, size * GOLDEN_RATIO, 256, 256]} /> */}
+      <roundedPlaneGeometry args={[size, size * GOLDEN_RATIO, 0.1]} />
       {/* @ts-ignore it's ok */}
       <AnimatedImageMaterial
         ref={matRef}
