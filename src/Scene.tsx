@@ -61,7 +61,7 @@ export const Scene = ({
     }
   }
 
-  const onPointerMissed = (e: ThreeEvent<MouseEvent>) => {
+  const onPointerMissed = (e: MouseEvent) => {
     e.stopPropagation()
     resetCamera()
   }
