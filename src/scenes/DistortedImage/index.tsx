@@ -4,9 +4,6 @@ import { hubabuba } from '@/assets'
 import { CameraRig, Focusable } from '@/components/CameraRig'
 import { a, useSpring } from '@react-spring/three'
 
-// TODO: correct animation timing when mouseOut
-// TODO: enter animation
-
 export const DistortedImageScene = ({}) => {
   const [computer] = useTexture([hubabuba])
 

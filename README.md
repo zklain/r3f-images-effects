@@ -1,4 +1,6 @@
-## R3F Starter Repo
+## R3F Effects
+
+This repo contains examples of various 3D effects implemented with [react-three-fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/examples)
 
 ### Deps
 
@@ -8,9 +10,9 @@
 - @react-three/drei
 - three
 - leva
+- @react-spring/three
 
-### TODO
+### Commands
 
-- [] eslint
-- [] router
-- [] husky
+`npm install && npm run dev` is all you need for now
+d
