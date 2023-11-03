@@ -10,7 +10,6 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<App />}>
         <Route path="/" element={<Navigate to={routes[0].path} replace />} />
-        {/* <Route path="/scenes"> */}
         {routes.map(({ path, element }) => (
           <Route
             key={path}
@@ -31,7 +30,6 @@ export const AppRoutes = () => {
           }
         />
       </Route>
-      {/* </Route> */}
     </Routes>
   )
 }
