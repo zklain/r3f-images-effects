@@ -100,7 +100,6 @@ const ImageCardBase = forwardRef(
             ]),
             0.08,
           ]}
-          // args={[1, 1, 0.08]}
         />
         {/* @ts-ignore it's ok */}
         <AnimatedImageMaterial
