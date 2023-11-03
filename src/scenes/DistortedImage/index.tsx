@@ -1,13 +1,12 @@
 import { GOLDEN_RATIO, ImageCard } from '@/components/ImageCard'
 import { Environment, Text, useTexture } from '@react-three/drei'
-import { hubabuba } from './assets'
-import { CameraRig, Focusable } from './components/CameraRig'
+import { hubabuba } from '@/assets'
+import { CameraRig, Focusable } from '@/components/CameraRig'
 
-// TODO: try with CSM material & spring
 // TODO: correct animation timing when mouseOut
 // TODO: enter animation
 
-export const Scene = ({}) => {
+export const DistortedImageScene = ({}) => {
   const [computer] = useTexture([hubabuba])
 
   return (
