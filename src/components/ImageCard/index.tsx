@@ -1,5 +1,5 @@
 import { useSpring } from '@react-spring/three'
-import { useCursor } from '@react-three/drei'
+import { useCursor, useTexture } from '@react-three/drei'
 import { extend, useFrame } from '@react-three/fiber'
 import { geometry } from 'maath'
 import { useCallback, useRef, useState } from 'react'
@@ -11,11 +11,11 @@ export const GOLDEN_RATIO = 1.618
 
 const springConfig = { mass: 5, friction: 50, tension: 120 }
 
-type IFrameProps = Omit<JSX.IntrinsicElements['mesh'], 'scale'> & {
+type ImageCardBaseProps = Omit<JSX.IntrinsicElements['mesh'], 'scale'> & {
   /**
    * Size of the card
    */
-  scale?: number | [number, number]
+  scale?: number | [x: number, y: number]
 
   /**
    * Image texture to display
@@ -38,15 +38,14 @@ type IFrameProps = Omit<JSX.IntrinsicElements['mesh'], 'scale'> & {
   noiseSpeed?: number
 }
 
-// todo: support url
-export const ImageCard = ({
+const ImageCardBase = ({
   scale = 1,
   texture,
   noiseScale = 3,
   noiseSpeed = 0.5,
   zoom = 1,
   ...props
-}: IFrameProps) => {
+}: ImageCardBaseProps) => {
   const [hovered, setHovered] = useState(false)
   useCursor(hovered)
 
@@ -85,10 +84,19 @@ export const ImageCard = ({
     <mesh
       onPointerOver={onPointerOver}
       onPointerOut={onPointerOut}
-      scale={Array.isArray(scale) ? [...scale, 1] : scale}
+      // scale={Array.isArray(scale) ? [...scale, 1] : scale}
       {...props}
     >
-      <roundedPlaneGeometry args={[1, 1, 0.08]} />
+      <roundedPlaneGeometry
+        args={[
+          ...((Array.isArray(scale) ? scale : [scale, scale]) as [
+            number,
+            number,
+          ]),
+          0.08,
+        ]}
+        // args={[1, 1, 0.08]}
+      />
       {/* @ts-ignore it's ok */}
       <AnimatedImageMaterial
         side={DoubleSide}
@@ -104,4 +112,35 @@ export const ImageCard = ({
       />
     </mesh>
   )
+}
+
+type ImageCardWithUrlProps = Omit<ImageCardBaseProps, 'texture'> & {
+  url: string
+}
+
+const ImageCardWithUrl = ({ url, ...props }: ImageCardWithUrlProps) => {
+  const texture = useTexture(url)
+  return <ImageCardBase texture={texture} {...props} />
+}
+
+type ImageCardProps = Omit<ImageCardBaseProps, 'texture'> & {
+  /**
+   *  Image url
+   */
+  url?: string
+
+  /**
+   * Image texture to display
+   */
+  texture?: Texture
+}
+
+export const ImageCard = (props: ImageCardProps) => {
+  if (props.url) {
+    return <ImageCardWithUrl url={props.url} {...props} />
+  }
+  if (props.texture) {
+    return <ImageCardBase texture={props.texture} {...props} />
+  }
+  throw Error('<ImageCard/> requires an URL or a texture')
 }

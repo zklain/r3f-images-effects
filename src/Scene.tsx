@@ -1,11 +1,18 @@
 import { GroundGrid } from '@/components/GroundGrid'
 import { GOLDEN_RATIO, ImageCard } from '@/components/ImageCard'
-import { Environment, SoftShadows, Text, useTexture } from '@react-three/drei'
+import {
+  Environment,
+  OrbitControls,
+  SoftShadows,
+  Text,
+  useTexture,
+} from '@react-three/drei'
 import { ThreeEvent, useFrame } from '@react-three/fiber'
 import { easing } from 'maath'
 import { useRef } from 'react'
 import { Object3D, Quaternion, Vector3 } from 'three'
-import { hubabuba } from './assets'
+import { hubabuba, neon } from './assets'
+import { a, useSpring } from '@react-spring/three'
 
 // const Shadows = memo(() => (
 //   <AccumulativeShadows
@@ -28,6 +35,7 @@ import { hubabuba } from './assets'
 // TODO: load image from url
 // TODO: correct animation timing when mouseOut
 // TODO: onClick focuses the card
+// TODO: try CameraControls
 
 const INITIAL_CAMERA_POSITION: [x: number, y: number, z: number] = [6, 3, 8]
 
@@ -62,8 +70,6 @@ export const Scene = ({
     resetCamera()
   }
 
-  // TODO: try CameraControls
-
   useFrame((state, dt) => {
     easing.damp3(state.camera.position, p, 0.4, dt)
     easing.dampQ(state.camera.quaternion, q, 0.4, dt)
@@ -73,11 +79,11 @@ export const Scene = ({
   return (
     <>
       <Text
-        color="#6c6c6c"
-        position={[0, -0.8, 1.02]}
+        color="#757575"
+        position={[0, -GOLDEN_RATIO / 2, 0.5]}
         rotation={[-Math.PI / 2, 0, 0]}
-        fontSize={0.8}
-        // font="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@800"
+        fontSize={0.5}
+        font="https://fonts.googleapis.com/css2?family=JetBrains+Mono"
       >
         Distorted Image
       </Text>
@@ -94,22 +100,11 @@ export const Scene = ({
         />
       </group>
 
-      <group
-        onClick={onClick}
-        onPointerMissed={onPointerMissed}
-        position={[0, 0, 2]}
-      >
-        <ImageCard
-          scale={[GOLDEN_RATIO, 1]}
-          texture={computer}
-          castShadow
-          receiveShadow
-        />
-      </group>
       <color attach="background" args={['#9e9e9e']} />
       <Environment preset="city" />
       <GroundGrid />
       <SoftShadows />
+      <OrbitControls />
     </>
   )
 }
