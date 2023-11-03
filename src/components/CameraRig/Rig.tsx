@@ -5,7 +5,9 @@ import { useEffect } from 'react'
 import { Object3D, Vector3 } from 'three'
 import { selectedObject } from './state'
 
-const INITIAL_CAMERA_POSITION: [x: number, y: number, z: number] = [6, 6, 8]
+export const INITIAL_CAMERA_POSITION: [x: number, y: number, z: number] = [
+  5, 5, 5,
+]
 
 export const CameraRig = ({
   initialCameraPosition = INITIAL_CAMERA_POSITION,
