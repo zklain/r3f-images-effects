@@ -12,7 +12,7 @@ import { memo, useRef } from 'react'
 import { Object3D, Quaternion, Vector3 } from 'three'
 import { hubabuba, neon, sunset } from './assets'
 import { GroundGrid } from './components/GroundGrid'
-import { ImageCard } from './components/ImageCard'
+import { GOLDEN_RATIO, ImageCard } from './components/ImageCard'
 
 const Shadows = memo(() => (
   <AccumulativeShadows
@@ -86,18 +86,35 @@ export const Scene = ({
   return (
     <>
       <Text
-        scale={0.5}
         color="#6c6c6c"
         position={[0, -0.8, 1.02]}
         rotation={[-Math.PI / 2, 0, 0]}
+        fontSize={0.8}
+        // font="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@800"
       >
         Distorted Image
       </Text>
-      <group onClick={onClick} onPointerMissed={onPointerMissed}>
+      <group
+        onClick={onClick}
+        onPointerMissed={onPointerMissed}
+        position={[0, 0, 0]}
+      >
         <ImageCard
-          size={1}
-          image={computer}
-          position={[0, 0, 0]}
+          scale={[1, GOLDEN_RATIO]}
+          texture={computer}
+          castShadow
+          receiveShadow
+        />
+      </group>
+
+      <group
+        onClick={onClick}
+        onPointerMissed={onPointerMissed}
+        position={[0, 0, 2]}
+      >
+        <ImageCard
+          scale={[GOLDEN_RATIO, 1]}
+          texture={computer}
           castShadow
           receiveShadow
         />
@@ -105,15 +122,6 @@ export const Scene = ({
       <color attach="background" args={['#9e9e9e']} />
       <Environment preset="city" />
       <GroundGrid />
-      {/* <Shadows /> */}
-      {/* <OrbitControls makeDefault /> */}
-      {/* <pointLight
-        color="#ffffff"
-        position={[0, 5, 5]}
-        intensity={1}
-        castShadow
-      /> */}
-      {/* <CameraControls /> */}
       <SoftShadows />
     </>
   )

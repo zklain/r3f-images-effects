@@ -5,16 +5,22 @@ import { vertexShader } from './shaders/vertex'
 import { fragmentShader } from './shaders/fragment'
 import { animated } from '@react-spring/three'
 
-// TODO: extend https://github.dev/pmndrs/drei#image
-// TODO: add max noise
-
+/**
+ * Image Material implementation
+ *
+ * Cover bg logic taken from https://github.dev/pmndrs/drei#image
+ */
 const DistortedImageMaterial = shaderMaterial(
   {
+    uScale: [1, 1],
+    uImageBounds: [1, 1],
+    uZoom: 1,
+    // distortion props
     uTime: 0,
     uNoiseStrength: 1,
-    uSpeed: 0.5,
-    uScale: 1,
-    map: null,
+    uNoiseSpeed: 0.5,
+    uNoiseScale: 1,
+    imageTexture: null,
   },
   vertexShader,
   fragmentShader,

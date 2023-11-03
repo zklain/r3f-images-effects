@@ -7,22 +7,25 @@ import { AnimatedImageMaterial } from './DistortedImageMaterial'
 import { DistortedImageMaterialRefType } from './types'
 import { geometry } from 'maath'
 
-extend(geometry)
-
 export const GOLDEN_RATIO = 1.618
 
 const springConfig = { mass: 5, friction: 50, tension: 120 }
 
-interface IFrameProps extends MeshProps {
+type IFrameProps = Omit<JSX.IntrinsicElements['mesh'], 'scale'> & {
   /**
    * Size of the card
    */
-  size?: number
+  scale?: number | [number, number]
 
   /**
    * Image texture to display
    */
-  image: Texture
+  texture: Texture
+
+  /**
+   * Image zoom
+   */
+  zoom?: number
 
   /**
    *  Scale of the noise
@@ -35,11 +38,15 @@ interface IFrameProps extends MeshProps {
   noiseSpeed?: number
 }
 
+// todo: change size to scale
+// todo: support url
+// TODO: count texture resolution
 export const ImageCard = ({
-  size = 1,
-  image,
+  scale = 1,
+  texture,
   noiseScale = 3,
   noiseSpeed = 0.5,
+  zoom = 1,
   ...props
 }: IFrameProps) => {
   const [hovered, setHovered] = useState(false)
@@ -65,18 +72,38 @@ export const ImageCard = ({
     matRef.current.uTime = state.clock.getElapsedTime()
   })
 
+  extend(geometry)
+
+  const planeBounds: [x: number, y: number] = Array.isArray(scale)
+    ? [scale[0], scale[1]]
+    : [scale, scale]
+
+  const imageBounds: [x: number, y: number] = [
+    texture!.image.width,
+    texture!.image.height,
+  ]
+
   return (
-    <mesh onPointerOver={onPointerOver} onPointerOut={onPointerOut} {...props}>
+    <mesh
+      onPointerOver={onPointerOver}
+      onPointerOut={onPointerOut}
+      scale={Array.isArray(scale) ? [...scale, 1] : scale}
+      {...props}
+    >
       {/* @ts-ignore // todo: extend types */}
-      <roundedPlaneGeometry args={[size, size * GOLDEN_RATIO, 0.1]} />
+      <roundedPlaneGeometry args={[1, 1, 0.08]} />
       {/* @ts-ignore it's ok */}
       <AnimatedImageMaterial
         side={DoubleSide}
         ref={matRef}
         {...springs}
-        uScale={noiseScale}
-        uSpeed={noiseSpeed}
-        map={image}
+        uNoiseScale={noiseScale}
+        uNoiseSpeed={noiseSpeed}
+        uImageBounds={imageBounds}
+        uScale={planeBounds}
+        imageTexture={texture}
+        uZoom={zoom}
+        toneMapped
       />
     </mesh>
   )

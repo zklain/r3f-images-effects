@@ -2,11 +2,14 @@ import { ShaderMaterial } from 'three'
 
 export type DistortedImageMaterialType =
   JSX.IntrinsicElements['shaderMaterial'] & {
-    map: THREE.Texture
-    uScale?: number
-    uSpeed?: number
+    imageTexture: THREE.Texture
+    uNoiseScale?: number
+    uNoiseSpeed?: number
     uNoiseStrength?: number
     uTime?: number
+    uScale: [number, number]
+    uZoom?: number
+    uImageBounds: [number, number]
   }
 
 export type DistortedImageMaterialRefType = ShaderMaterial &
