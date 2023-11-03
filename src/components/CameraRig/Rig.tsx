@@ -6,7 +6,7 @@ import { Object3D, Vector3 } from 'three'
 import { selectedObject } from './state'
 
 export const INITIAL_CAMERA_POSITION: [x: number, y: number, z: number] = [
-  5, 5, 5,
+  4, 3, 6,
 ]
 
 export const CameraRig = ({
