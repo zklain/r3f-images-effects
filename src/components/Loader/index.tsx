@@ -11,7 +11,7 @@ export const Loader = () => {
   })
   return (
     <mesh ref={ref}>
-      <boxGeometry args={[1, 1, 1, 16, 16, 16]} />
+      <boxGeometry args={[1, 1, 1, 4, 4, 4]} />
       <meshBasicMaterial wireframe />
     </mesh>
   )
