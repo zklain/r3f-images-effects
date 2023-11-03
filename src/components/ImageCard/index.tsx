@@ -2,10 +2,10 @@ import { useSpring } from '@react-spring/three'
 import { useCursor, useTexture } from '@react-three/drei'
 import { extend, useFrame } from '@react-three/fiber'
 import { geometry } from 'maath'
-import { useCallback, useRef, useState } from 'react'
-import { DoubleSide, Texture } from 'three'
+import { ForwardedRef, forwardRef, useCallback, useRef, useState } from 'react'
+import { DoubleSide, Mesh, Texture } from 'three'
 import { AnimatedImageMaterial } from './DistortedImageMaterial'
-import { DistortedImageMaterialRefType } from './types'
+import type { DistortedImageMaterialRefType } from './types'
 
 export const GOLDEN_RATIO = 1.618
 
@@ -38,90 +38,98 @@ type ImageCardBaseProps = Omit<JSX.IntrinsicElements['mesh'], 'scale'> & {
   noiseSpeed?: number
 }
 
-const ImageCardBase = ({
-  scale = 1,
-  texture,
-  noiseScale = 3,
-  noiseSpeed = 0.5,
-  zoom = 1,
-  ...props
-}: ImageCardBaseProps) => {
-  const [hovered, setHovered] = useState(false)
-  useCursor(hovered)
+const ImageCardBase = forwardRef(
+  (
+    {
+      scale = 1,
+      texture,
+      noiseScale = 3,
+      noiseSpeed = 0.5,
+      zoom = 1,
+      ...props
+    }: ImageCardBaseProps,
+    ref: ForwardedRef<Mesh>,
+  ) => {
+    const [hovered, setHovered] = useState(false)
+    useCursor(hovered)
 
-  const matRef = useRef<DistortedImageMaterialRefType>(null!)
+    const matRef = useRef<DistortedImageMaterialRefType>(null!)
 
-  const springs = useSpring({
-    uNoiseStrength: hovered ? 0 : 1,
-    clamp: true,
-    config: springConfig,
-  })
+    const springs = useSpring({
+      uNoiseStrength: hovered ? 0 : 1,
+      clamp: true,
+      config: springConfig,
+    })
 
-  const onPointerOver = useCallback(() => {
-    setHovered(true)
-  }, [setHovered])
+    const onPointerOver = useCallback(() => {
+      setHovered(true)
+    }, [setHovered])
 
-  const onPointerOut = useCallback(() => {
-    setHovered(false)
-  }, [setHovered])
+    const onPointerOut = useCallback(() => {
+      setHovered(false)
+    }, [setHovered])
 
-  useFrame((state, t) => {
-    matRef.current.uTime = state.clock.getElapsedTime()
-  })
+    useFrame((state, t) => {
+      matRef.current.uTime = state.clock.getElapsedTime()
+    })
 
-  extend(geometry)
+    extend(geometry)
 
-  const planeBounds: [x: number, y: number] = Array.isArray(scale)
-    ? [scale[0], scale[1]]
-    : [scale, scale]
+    const planeBounds: [x: number, y: number] = Array.isArray(scale)
+      ? [scale[0], scale[1]]
+      : [scale, scale]
 
-  const imageBounds: [x: number, y: number] = [
-    texture!.image.width,
-    texture!.image.height,
-  ]
+    const imageBounds: [x: number, y: number] = [
+      texture!.image.width,
+      texture!.image.height,
+    ]
 
-  return (
-    <mesh
-      onPointerOver={onPointerOver}
-      onPointerOut={onPointerOut}
-      // scale={Array.isArray(scale) ? [...scale, 1] : scale}
-      {...props}
-    >
-      <roundedPlaneGeometry
-        args={[
-          ...((Array.isArray(scale) ? scale : [scale, scale]) as [
-            number,
-            number,
-          ]),
-          0.08,
-        ]}
-        // args={[1, 1, 0.08]}
-      />
-      {/* @ts-ignore it's ok */}
-      <AnimatedImageMaterial
-        side={DoubleSide}
-        ref={matRef}
-        {...springs}
-        uNoiseScale={noiseScale}
-        uNoiseSpeed={noiseSpeed}
-        uImageBounds={imageBounds}
-        uScale={planeBounds}
-        imageTexture={texture}
-        uZoom={zoom}
-        toneMapped
-      />
-    </mesh>
-  )
-}
+    return (
+      <mesh
+        ref={ref}
+        onPointerOver={onPointerOver}
+        onPointerOut={onPointerOut}
+        // scale={Array.isArray(scale) ? [...scale, 1] : scale}
+        {...props}
+      >
+        <roundedPlaneGeometry
+          args={[
+            ...((Array.isArray(scale) ? scale : [scale, scale]) as [
+              number,
+              number,
+            ]),
+            0.08,
+          ]}
+          // args={[1, 1, 0.08]}
+        />
+        {/* @ts-ignore it's ok */}
+        <AnimatedImageMaterial
+          side={DoubleSide}
+          ref={matRef}
+          {...springs}
+          uNoiseScale={noiseScale}
+          uNoiseSpeed={noiseSpeed}
+          uImageBounds={imageBounds}
+          uScale={planeBounds}
+          imageTexture={texture}
+          uZoom={zoom}
+          toneMapped
+        />
+      </mesh>
+    )
+  },
+)
 
 type ImageCardWithUrlProps = Omit<ImageCardBaseProps, 'texture'> & {
   url: string
 }
 
-const ImageCardWithUrl = ({ url, ...props }: ImageCardWithUrlProps) => {
-  const texture = useTexture(url)
-  return <ImageCardBase texture={texture} {...props} />
-}
+const ImageCardWithUrl = forwardRef(
+  ({ url, ...props }: ImageCardWithUrlProps, ref: ForwardedRef<Mesh>) => {
+    const texture = useTexture(url)
+    return <ImageCardBase ref={ref} texture={texture} {...props} />
+  },
+)
 
 type ImageCardProps = Omit<ImageCardBaseProps, 'texture'> & {
   /**
@@ -135,12 +143,14 @@ type ImageCardProps = Omit<ImageCardBaseProps, 'texture'> & {
   texture?: Texture
 }
 
-export const ImageCard = (props: ImageCardProps) => {
-  if (props.url) {
-    return <ImageCardWithUrl url={props.url} {...props} />
-  }
-  if (props.texture) {
-    return <ImageCardBase texture={props.texture} {...props} />
-  }
-  throw Error('<ImageCard/> requires an URL or a texture')
-}
+export const ImageCard = forwardRef(
+  (props: ImageCardProps, ref: ForwardedRef<Mesh>) => {
+    if (props.url) {
+      return <ImageCardWithUrl ref={ref} url={props.url} {...props} />
+    }
+    if (props.texture) {
+      return <ImageCardBase ref={ref} texture={props.texture} {...props} />
+    }
+    throw Error('<ImageCard/> requires an URL or a texture')
+  },
+)

@@ -1,18 +1,10 @@
-import { GroundGrid } from '@/components/GroundGrid'
 import { GOLDEN_RATIO, ImageCard } from '@/components/ImageCard'
-import {
-  Environment,
-  OrbitControls,
-  SoftShadows,
-  Text,
-  useTexture,
-} from '@react-three/drei'
+import { Environment, OrbitControls, Text, useTexture } from '@react-three/drei'
 import { ThreeEvent, useFrame } from '@react-three/fiber'
 import { easing } from 'maath'
 import { useRef } from 'react'
 import { Object3D, Quaternion, Vector3 } from 'three'
-import { hubabuba, neon } from './assets'
-import { a, useSpring } from '@react-spring/three'
+import { hubabuba } from './assets'
 
 // const Shadows = memo(() => (
 //   <AccumulativeShadows
@@ -32,10 +24,11 @@ import { a, useSpring } from '@react-spring/three'
 
 // TODO: move card up, keep ground at 0
 // TODO: try with CSM material & spring
-// TODO: load image from url
 // TODO: correct animation timing when mouseOut
 // TODO: onClick focuses the card
 // TODO: try CameraControls
+// TODO: come in animation
+// TODO: extract focusable
 
 const INITIAL_CAMERA_POSITION: [x: number, y: number, z: number] = [6, 3, 8]
 
@@ -83,7 +76,6 @@ export const Scene = ({
         position={[0, -GOLDEN_RATIO / 2, 0.5]}
         rotation={[-Math.PI / 2, 0, 0]}
         fontSize={0.5}
-        font="https://fonts.googleapis.com/css2?family=JetBrains+Mono"
       >
         Distorted Image
       </Text>
@@ -102,8 +94,6 @@ export const Scene = ({
 
       <color attach="background" args={['#9e9e9e']} />
       <Environment preset="city" />
-      <GroundGrid />
-      <SoftShadows />
       <OrbitControls />
     </>
   )

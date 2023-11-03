@@ -3,6 +3,7 @@ import React from 'react'
 import './App.css'
 import { Scene } from './Scene'
 import { Loader } from './components/Loader'
+import { GroundGrid } from './components/GroundGrid'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <React.Suspense fallback={<Loader />}>
           <Scene />
         </React.Suspense>
+        <GroundGrid />
       </Canvas>
     </div>
   )
