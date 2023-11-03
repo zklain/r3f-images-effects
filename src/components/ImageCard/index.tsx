@@ -1,11 +1,11 @@
 import { useSpring } from '@react-spring/three'
 import { useCursor } from '@react-three/drei'
-import { MeshProps, extend, useFrame } from '@react-three/fiber'
+import { extend, useFrame } from '@react-three/fiber'
+import { geometry } from 'maath'
 import { useCallback, useRef, useState } from 'react'
 import { DoubleSide, Texture } from 'three'
 import { AnimatedImageMaterial } from './DistortedImageMaterial'
 import { DistortedImageMaterialRefType } from './types'
-import { geometry } from 'maath'
 
 export const GOLDEN_RATIO = 1.618
 
@@ -38,9 +38,7 @@ type IFrameProps = Omit<JSX.IntrinsicElements['mesh'], 'scale'> & {
   noiseSpeed?: number
 }
 
-// todo: change size to scale
 // todo: support url
-// TODO: count texture resolution
 export const ImageCard = ({
   scale = 1,
   texture,
@@ -90,7 +88,6 @@ export const ImageCard = ({
       scale={Array.isArray(scale) ? [...scale, 1] : scale}
       {...props}
     >
-      {/* @ts-ignore // todo: extend types */}
       <roundedPlaneGeometry args={[1, 1, 0.08]} />
       {/* @ts-ignore it's ok */}
       <AnimatedImageMaterial

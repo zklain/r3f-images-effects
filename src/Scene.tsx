@@ -1,46 +1,33 @@
-import {
-  AccumulativeShadows,
-  Environment,
-  RandomizedLight,
-  SoftShadows,
-  Text,
-  useTexture,
-} from '@react-three/drei'
+import { GroundGrid } from '@/components/GroundGrid'
+import { GOLDEN_RATIO, ImageCard } from '@/components/ImageCard'
+import { Environment, SoftShadows, Text, useTexture } from '@react-three/drei'
 import { ThreeEvent, useFrame } from '@react-three/fiber'
 import { easing } from 'maath'
-import { memo, useRef } from 'react'
+import { useRef } from 'react'
 import { Object3D, Quaternion, Vector3 } from 'three'
-import { hubabuba, neon, sunset } from './assets'
-import { GroundGrid } from './components/GroundGrid'
-import { GOLDEN_RATIO, ImageCard } from './components/ImageCard'
+import { hubabuba } from './assets'
 
-const Shadows = memo(() => (
-  <AccumulativeShadows
-    position={[0, -0.811, 0]}
-    temporal
-    frames={100}
-    color="#3c3c3c"
-    colorBlend={1}
-    alphaTest={0.75}
-    scale={10}
-    opacity={0.8}
-    toneMapped={true}
-  >
-    <RandomizedLight amount={10} radius={4} size={10} position={[5, 5, -1]} />
-  </AccumulativeShadows>
-))
+// const Shadows = memo(() => (
+//   <AccumulativeShadows
+//     position={[0, -0.811, 0]}
+//     temporal
+//     frames={100}
+//     color="#3c3c3c"
+//     colorBlend={1}
+//     alphaTest={0.75}
+//     scale={10}
+//     opacity={0.8}
+//     toneMapped={true}
+//   >
+//     <RandomizedLight amount={10} radius={4} size={10} position={[5, 5, -1]} />
+//   </AccumulativeShadows>
+// ))
 
 // TODO: move card up, keep ground at 0
-// TODO: aspect ratio (add a landscape photo image)
-// TODO: try with CSM material
-// TODO:  load image from url
-// TODO: try csm materials animated with react spring
+// TODO: try with CSM material & spring
+// TODO: load image from url
 // TODO: correct animation timing when mouseOut
-// todo: change bg color
-// TODO: LAYOUT: horizontal || vertical if mobile
-// TODO: add more effects => Follow mouse, zesnulen
 // TODO: onClick focuses the card
-// TODO: switching scenes
 
 const INITIAL_CAMERA_POSITION: [x: number, y: number, z: number] = [6, 3, 8]
 
@@ -127,5 +114,4 @@ export const Scene = ({
   )
 }
 
-useTexture.preload(neon)
-useTexture.preload(sunset)
+useTexture.preload(hubabuba)
