@@ -3,7 +3,7 @@ import { Grid } from '@react-three/drei'
 export const GroundGrid = () => {
   return (
     <Grid
-      position={[0, -0.81, 0]}
+      position={[0, 0, 0]}
       args={[10.5, 10.5]}
       cellSize={0.5}
       cellThickness={1}

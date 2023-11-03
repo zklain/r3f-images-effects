@@ -14,7 +14,7 @@ function App() {
           <a />
         </nav>
       </header>
-      <Canvas shadows camera={{ fov: 40, position: [6, 3, 8] }}>
+      <Canvas shadows camera={{ fov: 40, position: [6, 5, 8] }}>
         <React.Suspense fallback={<Loader />}>
           <Scene />
         </React.Suspense>
