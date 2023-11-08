@@ -8,12 +8,11 @@ import { GOLDEN_RATIO } from '@/utils/consts'
 
 export const MousePositionMaterial = shaderMaterial(
   {
-    u_mouse: new Vector2(0.5),
-    u_time: 0,
-    u_scale: new Vector2(1, GOLDEN_RATIO),
+    uMouse: new Vector2(0.5),
+    uTime: 0,
+    uScale: new Vector2(1, GOLDEN_RATIO),
     color: null,
-    u_distortionMap: null,
-    u_strength: 0,
+    uStrength: 0,
     map: null,
   },
   vertexShader,

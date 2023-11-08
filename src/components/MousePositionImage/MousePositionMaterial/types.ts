@@ -9,20 +9,17 @@ export type MousePositionMaterialType =
     /**
      * Mouse position
      */
-    u_mouse: Vector2
-    u_time: number
-    /**
-     * Distortion texture
-     */
-    u_distortionMap?: Texture
+    uMouse: Vector2
+    uTime: number
+
     /**
      * Plane scale
      */
-    u_scale: Vector2
+    uScale: Vector2
     /**
      * Effect strength
      */
-    u_strength: number
+    uStrength: number
   }
 
 export type MousePositionMaterialRefType = ShaderMaterial &

@@ -1,5 +1,5 @@
 import { snoise } from '@/utils/glsl'
-import { REVISION } from 'three'
+import { version } from '@/utils/version'
 
 // TODO: use image shader utils
 export const fragmentShader = /*glsl*/ `
@@ -10,12 +10,11 @@ export const fragmentShader = /*glsl*/ `
   }
 
 
-  uniform float u_time;
-  uniform vec2 u_mouse;
-  uniform vec2 u_scale;
-  uniform float u_speed;
-  uniform float u_strength;
-  uniform sampler2D u_distortionMap;
+  uniform float uTime;
+  uniform vec2 uMouse;
+  uniform vec2 uScale;
+  uniform float uSpeed;
+  uniform float uStrength;
   uniform sampler2D map;
 
 
@@ -23,12 +22,12 @@ export const fragmentShader = /*glsl*/ `
 
   void main() {
 
-    vec2 a = aspect(u_scale);
+    vec2 a = aspect(uScale);
     vec2 centeredUv = vUv * a;
 
-    vec2 mouseCenter = u_mouse * a;
+    vec2 mouseCenter = uMouse * a;
 
-    vec2 scaledUv = centeredUv * 20. + u_time;
+    vec2 scaledUv = centeredUv * 20. + uTime;
 
     // Generate shape under the cursor
     vec2 wavedUv = vec2(
@@ -37,13 +36,13 @@ export const fragmentShader = /*glsl*/ `
     );
 
     // distorted uvs => this can be replaced with a displacement texture
-    float noise = snoise(vUv * 10.0 + u_time);
+    float noise = snoise(vUv * 10.0 + uTime);
 
     vec2 distortedUv = vUv + noise;
 
     float s = smoothstep(0.01, 0.9, (0.02 / (distance(wavedUv, mouseCenter))));
     // multiply by effect strength
-    s *= u_strength;
+    s *= uStrength;
 
     // get final uv
     vec2 uv = mix(vUv, distortedUv, s);
@@ -54,10 +53,6 @@ export const fragmentShader = /*glsl*/ `
     gl_FragColor = vec4(textureColor.rgb, 1.0);
 
     #include <tonemapping_fragment>
-    #include <${
-      parseInt(REVISION.replace(/\D+/g, '')) >= 154
-        ? 'colorspace_fragment'
-        : 'encodings_fragment'
-    }>
+    #include <${version >= 154 ? 'colorspace_fragment' : 'encodings_fragment'}>
   }
 `

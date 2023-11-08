@@ -1,6 +1,6 @@
 import { GOLDEN_RATIO } from '@/utils/consts'
 import { useSpring } from '@react-spring/three'
-import { useCursor } from '@react-three/drei'
+import { Html, useCursor } from '@react-three/drei'
 import { ThreeEvent, Vector3, useFrame } from '@react-three/fiber'
 import { useCallback, useRef, useState } from 'react'
 import { Mesh, Texture, Vector2 } from 'three'
@@ -10,6 +10,7 @@ import {
   MousePositionMaterial,
 } from './MousePositionMaterial'
 import { MousePositionMaterialRefType } from './MousePositionMaterial/types'
+import { useControls } from 'leva'
 
 export const MousePositionDistortedImage = ({
   position,
@@ -19,7 +20,7 @@ export const MousePositionDistortedImage = ({
 }: {
   position?: Vector3
   texture: Texture
-  scale?: number | [x: number, y: number]
+  scale: number | [x: number, y: number]
   name?: string
 }) => {
   const mesh = useRef<Mesh>(null!)
@@ -59,32 +60,35 @@ export const MousePositionDistortedImage = ({
   }, [])
 
   useFrame((state) => {
-    material.current.u_time = state.clock.getElapsedTime()
-    material.current.u_mouse.copy(mousePosition.current)
+    material.current.uTime = state.clock.getElapsedTime()
+    material.current.uMouse.copy(mousePosition.current)
   })
 
   return (
-    <ImageCardGeo
-      ref={mesh}
-      scale={scale}
-      name={name}
-      position={position}
-      onPointerOver={onPointerOver}
-      onPointerMove={onPointerMove}
-      onPointerOut={onPointerOut}
-    >
-      {/* @ts-ignore don't worry */}
-      <AnimatedMousePositionMaterial
-        ref={material}
-        map={texture}
-        // TODO: image props
-        u_scale={new Vector2(1, GOLDEN_RATIO)}
-        key={MousePositionMaterial.key}
-        u_time={0}
-        u_mouse={mousePosition.current}
-        // u_distortionMap={distortionMap}
-        {...springs}
-      />
-    </ImageCardGeo>
+    <>
+      <ImageCardGeo
+        ref={mesh}
+        scale={scale}
+        name={name}
+        position={position}
+        onPointerOver={onPointerOver}
+        onPointerMove={onPointerMove}
+        onPointerOut={onPointerOut}
+      >
+        {/* @ts-ignore don't worry */}
+        <AnimatedMousePositionMaterial
+          ref={material}
+          map={texture}
+          uScale={
+            Array.isArray(scale)
+              ? new Vector2(scale[0], scale[1])
+              : new Vector2(scale, scale)
+          }
+          key={MousePositionMaterial.key}
+          uTime={0}
+          {...springs}
+        />
+      </ImageCardGeo>
+    </>
   )
 }
