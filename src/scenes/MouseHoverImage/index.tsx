@@ -30,7 +30,7 @@ export const MouseHoverImage = ({}) => {
         Click the image to focus on it.
         {'\n'}
         {'\n'}
-        Try hovering the image to displace the image underneath the cursor.
+        Hover the image to displace the image underneath the cursor.
         {'\n'}
         {'\n'}
       </DescriptionText>

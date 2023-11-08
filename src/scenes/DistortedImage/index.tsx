@@ -29,7 +29,7 @@ export const DistortedImageScene = ({}) => {
         Click the image to focus on it.
         {'\n'}
         {'\n'}
-        Try hovering the image to see the original.
+        Hover the image to see the original.
       </DescriptionText>
       <group position={[0, GOLDEN_RATIO / 2, 0]}>
         <Focusable>

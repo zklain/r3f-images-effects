@@ -6,7 +6,7 @@ import { Object3D, Vector3 } from 'three'
 import { selectedObject } from './state'
 
 export const INITIAL_CAMERA_POSITION: [x: number, y: number, z: number] = [
-  4, 3, 6,
+  4, 7, 7,
 ]
 
 export const CameraRig = ({
@@ -21,7 +21,7 @@ export const CameraRig = ({
 
   const focusCamera = (obj: Object3D) => {
     obj.updateWorldMatrix(true, true)
-    obj.localToWorld(p.set(0, 0, 3))
+    obj.localToWorld(p.set(0, 0, 3.5))
     obj.localToWorld(focus.set(0, 0, 0))
     cameraControls?.setLookAt(...p.toArray(), ...focus.toArray(), true)
   }
@@ -43,7 +43,7 @@ export const CameraRig = ({
   return (
     <>
       <PerspectiveCamera
-        fov={40}
+        fov={30}
         makeDefault
         position={INITIAL_CAMERA_POSITION}
       />
