@@ -31,14 +31,14 @@ export const MousePositionDistortedImage = ({
   useCursor(hovered)
 
   const [springs, api] = useSpring(() => ({
-    u_strength: 0,
+    uStrength: 0,
     clamp: true,
   }))
 
   const onPointerOver = useCallback(() => {
     setHovered(true)
     api.start({
-      u_strength: 1,
+      uStrength: 1,
       config: { mass: 5, friction: 50, tension: 120 },
     })
   }, [setHovered])
@@ -46,7 +46,7 @@ export const MousePositionDistortedImage = ({
   const onPointerOut = useCallback(() => {
     setHovered(false)
     api.start({
-      u_strength: 0,
+      uStrength: 0,
       config: { mass: 5, friction: 50, tension: 120 },
     })
   }, [setHovered])
