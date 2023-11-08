@@ -30,6 +30,6 @@ DistortedImageMaterial.key = generateUUID()
 
 extend({ DistortedImageMaterial })
 
-export const AnimatedImageMaterial = animated('distortedImageMaterial')
+export const AnimatedDistortedImageMaterial = animated('distortedImageMaterial')
 
 export { DistortedImageMaterial }

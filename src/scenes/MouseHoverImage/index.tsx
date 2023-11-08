@@ -1,11 +1,14 @@
-import { GOLDEN_RATIO, ImageCard } from '@/components/ImageCard'
+import { GOLDEN_RATIO, ImageCard } from '@/components/DistortedImageCard'
 import { Environment, Text, useTexture } from '@react-three/drei'
-import { hubabuba } from '@/assets'
+import { brokebackMountain } from '@/assets'
 import { CameraRig, Focusable } from '@/components/CameraRig'
 import { a, useSpring } from '@react-spring/three'
+import { DescriptionText, TitleText } from '@/components/SceneTypo'
 
+// TODO: export animation
+// TODO: create material
 export const MouseHoverImage = ({}) => {
-  const [computer] = useTexture([hubabuba])
+  const [texture] = useTexture([brokebackMountain])
 
   const animation = useSpring({
     from: {
@@ -18,40 +21,24 @@ export const MouseHoverImage = ({}) => {
 
   return (
     <a.group {...animation}>
-      <Text
-        color="#5c5c5c"
-        position={[0, 0.001, 0.5]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        fontSize={0.5}
-        maxWidth={3}
-      >
-        Mouse Hover Distortion
-      </Text>
+      <TitleText maxWidth={3}>Mouse Hover Distortion</TitleText>
 
-      <Text
-        rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, 0.001, 1.01]}
-        fontSize={0.1}
-        color="#5c5c5c"
-        maxWidth={2}
-        anchorX={'left'}
-        anchorY={'top'}
-      >
+      <DescriptionText position={[0, 0.001, 1.5]}>
         Distortion effect done by displacing the UV coordinates using a perlin
         noise function.
         {'\n'}
         {'\n'}
-        Try hovering the image to see the original.
+        Try hovering the image to displace the texture where the mouse is.
         {'\n'}
         {'\n'}
         Click the image to focus on it.
-      </Text>
+      </DescriptionText>
       <group position={[0, GOLDEN_RATIO / 2, 0]}>
         <Focusable>
           <ImageCard
             name="image"
             scale={[1, GOLDEN_RATIO]}
-            texture={computer}
+            texture={texture}
             castShadow
             receiveShadow
           />
@@ -65,4 +52,4 @@ export const MouseHoverImage = ({}) => {
   )
 }
 
-useTexture.preload(hubabuba)
+useTexture.preload(brokebackMountain)

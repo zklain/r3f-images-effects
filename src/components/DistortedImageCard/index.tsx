@@ -4,7 +4,7 @@ import { extend, useFrame } from '@react-three/fiber'
 import { geometry } from 'maath'
 import { ForwardedRef, forwardRef, useCallback, useRef, useState } from 'react'
 import { DoubleSide, Mesh, Texture } from 'three'
-import { AnimatedImageMaterial } from './DistortedImageMaterial'
+import { AnimatedDistortedImageMaterial } from './DistortedImageMaterial'
 import type { DistortedImageMaterialRefType } from './types'
 
 export const GOLDEN_RATIO = 1.618
@@ -102,7 +102,7 @@ const ImageCardBase = forwardRef(
           ]}
         />
         {/* @ts-ignore it's ok */}
-        <AnimatedImageMaterial
+        <AnimatedDistortedImageMaterial
           side={DoubleSide}
           ref={matRef}
           {...springs}

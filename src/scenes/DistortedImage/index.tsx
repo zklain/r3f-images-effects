@@ -1,8 +1,9 @@
-import { GOLDEN_RATIO, ImageCard } from '@/components/ImageCard'
-import { Environment, Text, useTexture } from '@react-three/drei'
 import { hubabuba } from '@/assets'
 import { CameraRig, Focusable } from '@/components/CameraRig'
+import { GOLDEN_RATIO, ImageCard } from '@/components/DistortedImageCard'
+import { DescriptionText, TitleText } from '@/components/SceneTypo'
 import { a, useSpring } from '@react-spring/three'
+import { Environment, useTexture } from '@react-three/drei'
 
 export const DistortedImageScene = ({}) => {
   const [computer] = useTexture([hubabuba])
@@ -18,24 +19,8 @@ export const DistortedImageScene = ({}) => {
 
   return (
     <a.group {...animation}>
-      <Text
-        color="#5c5c5c"
-        position={[0, 0.001, 0.5]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        fontSize={0.5}
-      >
-        Distorted Image
-      </Text>
-
-      <Text
-        rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, 0.001, 1.01]}
-        fontSize={0.1}
-        color="#5c5c5c"
-        maxWidth={2}
-        anchorX={'left'}
-        anchorY={'top'}
-      >
+      <TitleText>Distorted Image</TitleText>
+      <DescriptionText>
         Distortion effect done by displacing the UV coordinates using a perlin
         noise function.
         {'\n'}
@@ -44,7 +29,7 @@ export const DistortedImageScene = ({}) => {
         {'\n'}
         {'\n'}
         Click the image to focus on it.
-      </Text>
+      </DescriptionText>
       <group position={[0, GOLDEN_RATIO / 2, 0]}>
         <Focusable>
           <ImageCard
