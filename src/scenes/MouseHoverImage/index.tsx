@@ -42,8 +42,6 @@ export const MouseHoverImage = ({}) => {
         </Focusable>
       </group>
 
-      <color attach="background" args={['#9e9e9e']} />
-      <Environment preset="city" />
       <CameraRig />
     </a.group>
   )

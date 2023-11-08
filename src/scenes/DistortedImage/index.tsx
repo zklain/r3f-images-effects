@@ -1,4 +1,4 @@
-import { hubabuba, sunset2 } from '@/assets'
+import { sunset } from '@/assets'
 import { CameraRig, Focusable } from '@/components/CameraRig'
 import { DistortedImageCard } from '@/components/DistortedImageCard'
 import { DescriptionText, TitleText } from '@/components/SceneTypo'
@@ -7,7 +7,7 @@ import { a, useSpring } from '@react-spring/three'
 import { Environment, useTexture } from '@react-three/drei'
 
 export const DistortedImageScene = ({}) => {
-  const [texture] = useTexture([sunset2])
+  const [texture] = useTexture([sunset])
 
   const animation = useSpring({
     from: {
@@ -43,11 +43,7 @@ export const DistortedImageScene = ({}) => {
         </Focusable>
       </group>
 
-      <color attach="background" args={['#9e9e9e']} />
-      <Environment preset="city" />
       <CameraRig />
     </a.group>
   )
 }
-
-useTexture.preload(hubabuba)

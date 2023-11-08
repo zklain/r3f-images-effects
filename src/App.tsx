@@ -4,6 +4,7 @@ import { NavLink, Outlet } from 'react-router-dom'
 import './App.css'
 import { INITIAL_CAMERA_POSITION } from './components/CameraRig/Rig'
 import { routes } from './router/routes'
+import { Environment } from '@react-three/drei'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Canvas shadows camera={{ fov: 40, position: INITIAL_CAMERA_POSITION }}>
         <Outlet />
         <GroundGrid />
+        <Environment preset="city" />
       </Canvas>
     </div>
   )

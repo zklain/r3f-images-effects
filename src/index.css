@@ -34,7 +34,7 @@ canvas {
 
 .header h1 {
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 400;
   text-transform: uppercase;
   font-family: 'JetBrains Mono', monospace;
   color: #000000;
@@ -50,7 +50,8 @@ canvas {
 .navigation a {
   color: #020202;
   text-decoration: none;
-  font-weight: 400;
+  font-weight: 300;
+  font-size: 14px;
 }
 
 .navigation a:hover,
