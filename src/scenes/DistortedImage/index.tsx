@@ -1,4 +1,4 @@
-import { hubabuba } from '@/assets'
+import { hubabuba, sunset2 } from '@/assets'
 import { CameraRig, Focusable } from '@/components/CameraRig'
 import { DistortedImageCard } from '@/components/DistortedImageCard'
 import { DescriptionText, TitleText } from '@/components/SceneTypo'
@@ -7,7 +7,7 @@ import { a, useSpring } from '@react-spring/three'
 import { Environment, useTexture } from '@react-three/drei'
 
 export const DistortedImageScene = ({}) => {
-  const [computer] = useTexture([hubabuba])
+  const [texture] = useTexture([sunset2])
 
   const animation = useSpring({
     from: {
@@ -36,7 +36,7 @@ export const DistortedImageScene = ({}) => {
           <DistortedImageCard
             name="image"
             scale={[1, GOLDEN_RATIO]}
-            texture={computer}
+            texture={texture}
             castShadow
             receiveShadow
           />

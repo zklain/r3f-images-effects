@@ -1,15 +1,13 @@
 import { Environment, Text, useTexture } from '@react-three/drei'
-import { brokebackMountain } from '@/assets'
+import { greenHorse } from '@/assets'
 import { CameraRig, Focusable } from '@/components/CameraRig'
 import { a, useSpring } from '@react-spring/three'
 import { DescriptionText, TitleText } from '@/components/SceneTypo'
 import { MousePositionDistortedImage } from '@/components/MousePositionImage'
 import { GOLDEN_RATIO } from '@/utils/consts'
 
-// TODO: export animation
-// TODO: create material
 export const MouseHoverImage = ({}) => {
-  const [texture] = useTexture([brokebackMountain])
+  const [texture] = useTexture([greenHorse])
 
   const animation = useSpring({
     from: {
@@ -51,4 +49,4 @@ export const MouseHoverImage = ({}) => {
   )
 }
 
-useTexture.preload(brokebackMountain)
+useTexture.preload(greenHorse)
