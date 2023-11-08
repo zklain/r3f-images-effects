@@ -39,8 +39,6 @@ export const fragmentShader = /*glsl*/ `
     // distorted uvs => this can be replaced with a displacement texture
     float noise = snoise(vUv * 10.0 + u_time);
 
-    // TODO: enable if texture passed in
-    // vec4 noise = texture2D(u_distortionMap, vUv);
     vec2 distortedUv = vUv + noise;
 
     float s = smoothstep(0.01, 0.9, (0.02 / (distance(wavedUv, mouseCenter))));

@@ -68,7 +68,6 @@ type ImageCardBaseProps = Omit<JSX.IntrinsicElements['mesh'], 'scale'> & {
 }
 
 // TODO: remove material props
-// TODO: leave as ImageCard with geo only and move it to the scene
 const DistortedImageCardBase = forwardRef(
   (
     {
