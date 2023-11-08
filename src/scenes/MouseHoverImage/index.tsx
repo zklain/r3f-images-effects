@@ -1,9 +1,10 @@
-import { GOLDEN_RATIO, ImageCard } from '@/components/DistortedImageCard'
 import { Environment, Text, useTexture } from '@react-three/drei'
 import { brokebackMountain } from '@/assets'
 import { CameraRig, Focusable } from '@/components/CameraRig'
 import { a, useSpring } from '@react-spring/three'
 import { DescriptionText, TitleText } from '@/components/SceneTypo'
+import { MousePositionDistortedImage } from '@/components/MousePositionImage'
+import { GOLDEN_RATIO } from '@/utils/consts'
 
 // TODO: export animation
 // TODO: create material
@@ -28,19 +29,17 @@ export const MouseHoverImage = ({}) => {
         noise function.
         {'\n'}
         {'\n'}
-        Try hovering the image to displace the texture where the mouse is.
+        Try hovering the image to displace the texture where
         {'\n'}
         {'\n'}
         Click the image to focus on it.
       </DescriptionText>
       <group position={[0, GOLDEN_RATIO / 2, 0]}>
         <Focusable>
-          <ImageCard
-            name="image"
+          <MousePositionDistortedImage
+            name="mouse-position-image"
             scale={[1, GOLDEN_RATIO]}
             texture={texture}
-            castShadow
-            receiveShadow
           />
         </Focusable>
       </group>

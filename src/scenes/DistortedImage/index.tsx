@@ -1,7 +1,8 @@
 import { hubabuba } from '@/assets'
 import { CameraRig, Focusable } from '@/components/CameraRig'
-import { GOLDEN_RATIO, ImageCard } from '@/components/DistortedImageCard'
+import { DistortedImageCard } from '@/components/DistortedImageCard'
 import { DescriptionText, TitleText } from '@/components/SceneTypo'
+import { GOLDEN_RATIO } from '@/utils/consts'
 import { a, useSpring } from '@react-spring/three'
 import { Environment, useTexture } from '@react-three/drei'
 
@@ -32,7 +33,7 @@ export const DistortedImageScene = ({}) => {
       </DescriptionText>
       <group position={[0, GOLDEN_RATIO / 2, 0]}>
         <Focusable>
-          <ImageCard
+          <DistortedImageCard
             name="image"
             scale={[1, GOLDEN_RATIO]}
             texture={computer}

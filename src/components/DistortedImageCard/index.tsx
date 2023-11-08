@@ -7,7 +7,36 @@ import { DoubleSide, Mesh, Texture } from 'three'
 import { AnimatedDistortedImageMaterial } from './DistortedImageMaterial'
 import type { DistortedImageMaterialRefType } from './types'
 
-export const GOLDEN_RATIO = 1.618
+type ImageCardGeoProps = Omit<JSX.IntrinsicElements['mesh'], 'scale'> & {
+  /**
+   * Size of the card
+   */
+  scale?: number | [x: number, y: number]
+}
+
+export const ImageCardGeo = forwardRef(
+  (
+    { children, scale, ...props }: ImageCardGeoProps,
+    ref: ForwardedRef<Mesh>,
+  ) => {
+    extend(geometry)
+
+    return (
+      <mesh ref={ref} {...props}>
+        <roundedPlaneGeometry
+          args={[
+            ...((Array.isArray(scale) ? scale : [scale, scale]) as [
+              number,
+              number,
+            ]),
+            0.08,
+          ]}
+        />
+        {children}
+      </mesh>
+    )
+  },
+)
 
 const springConfig = { mass: 5, friction: 50, tension: 120 }
 
@@ -38,7 +67,9 @@ type ImageCardBaseProps = Omit<JSX.IntrinsicElements['mesh'], 'scale'> & {
   noiseSpeed?: number
 }
 
-const ImageCardBase = forwardRef(
+// TODO: remove material props
+// TODO: leave as ImageCard with geo only and move it to the scene
+const DistortedImageCardBase = forwardRef(
   (
     {
       scale = 1,
@@ -46,6 +77,7 @@ const ImageCardBase = forwardRef(
       noiseScale = 3,
       noiseSpeed = 0.5,
       zoom = 1,
+      children,
       ...props
     }: ImageCardBaseProps,
     ref: ForwardedRef<Mesh>,
@@ -73,8 +105,6 @@ const ImageCardBase = forwardRef(
       matRef.current.uTime = state.clock.getElapsedTime()
     })
 
-    extend(geometry)
-
     const planeBounds: [x: number, y: number] = Array.isArray(scale)
       ? [scale[0], scale[1]]
       : [scale, scale]
@@ -85,22 +115,13 @@ const ImageCardBase = forwardRef(
     ]
 
     return (
-      <mesh
+      <ImageCardGeo
         ref={ref}
         onPointerOver={onPointerOver}
         onPointerOut={onPointerOut}
-        // scale={Array.isArray(scale) ? [...scale, 1] : scale}
+        scale={scale}
         {...props}
       >
-        <roundedPlaneGeometry
-          args={[
-            ...((Array.isArray(scale) ? scale : [scale, scale]) as [
-              number,
-              number,
-            ]),
-            0.08,
-          ]}
-        />
         {/* @ts-ignore it's ok */}
         <AnimatedDistortedImageMaterial
           side={DoubleSide}
@@ -114,7 +135,8 @@ const ImageCardBase = forwardRef(
           uZoom={zoom}
           toneMapped
         />
-      </mesh>
+        {children}
+      </ImageCardGeo>
     )
   },
 )
@@ -126,7 +148,7 @@ type ImageCardWithUrlProps = Omit<ImageCardBaseProps, 'texture'> & {
 const ImageCardWithUrl = forwardRef(
   ({ url, ...props }: ImageCardWithUrlProps, ref: ForwardedRef<Mesh>) => {
     const texture = useTexture(url)
-    return <ImageCardBase ref={ref} texture={texture} {...props} />
+    return <DistortedImageCardBase ref={ref} texture={texture} {...props} />
   },
 )
 
@@ -142,13 +164,15 @@ type ImageCardProps = Omit<ImageCardBaseProps, 'texture'> & {
   texture?: Texture
 }
 
-export const ImageCard = forwardRef(
+export const DistortedImageCard = forwardRef(
   (props: ImageCardProps, ref: ForwardedRef<Mesh>) => {
     if (props.url) {
       return <ImageCardWithUrl ref={ref} url={props.url} {...props} />
     }
     if (props.texture) {
-      return <ImageCardBase ref={ref} texture={props.texture} {...props} />
+      return (
+        <DistortedImageCardBase ref={ref} texture={props.texture} {...props} />
+      )
     }
     throw Error('<ImageCard/> requires an URL or a texture')
   },
