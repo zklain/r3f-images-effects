@@ -1,23 +1,22 @@
-import { Canvas } from '@react-three/fiber'
-import React from 'react'
+import { NavLink } from 'react-router-dom'
 import './App.css'
-import { Loader } from '@/components/Loader'
-import { GroundGrid } from '@/components/GroundGrid'
-import { DistortedImageScene } from '@/scenes/DistortedImage'
-import { INITIAL_CAMERA_POSITION } from './components/CameraRig/Rig'
+import { AppCanvas } from './components/AppCanvas'
+import { routes } from './router/routes'
 
 function App() {
   return (
     <div className="App">
       <header className="header">
         <h1>R3F Effects</h1>
+        <nav className="navigation">
+          {routes.map(({ name, path }) => (
+            <NavLink key={path} to={path}>
+              {name}
+            </NavLink>
+          ))}
+        </nav>
       </header>
-      <Canvas shadows camera={{ fov: 40, position: INITIAL_CAMERA_POSITION }}>
-        <React.Suspense fallback={<Loader />}>
-          <DistortedImageScene />
-        </React.Suspense>
-        <GroundGrid />
-      </Canvas>
+      <AppCanvas />
     </div>
   )
 }

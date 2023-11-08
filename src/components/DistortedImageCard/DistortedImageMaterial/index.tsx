@@ -1,9 +1,9 @@
 import { shaderMaterial } from '@react-three/drei'
 import { extend } from '@react-three/fiber'
 import { generateUUID } from 'three/src/math/MathUtils'
+import { animated } from '@react-spring/three'
 import { vertexShader } from './shaders/vertex'
 import { fragmentShader } from './shaders/fragment'
-import { animated } from '@react-spring/three'
 
 /**
  * Image Material implementation
@@ -30,6 +30,6 @@ DistortedImageMaterial.key = generateUUID()
 
 extend({ DistortedImageMaterial })
 
-export const AnimatedImageMaterial = animated('distortedImageMaterial')
+export const AnimatedDistortedImageMaterial = animated('distortedImageMaterial')
 
 export { DistortedImageMaterial }

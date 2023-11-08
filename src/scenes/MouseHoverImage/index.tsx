@@ -1,13 +1,13 @@
-import { sunset } from '@/assets'
+import { greenHorse } from '@/assets'
 import { CameraRig, Focusable } from '@/components/CameraRig'
-import { DistortedImageCard } from '@/components/DistortedImageCard'
+import { MousePositionDistortedImage } from '@/components/MousePositionImage'
 import { DescriptionText, TitleText } from '@/components/SceneTypo'
 import { GOLDEN_RATIO } from '@/utils/consts'
 import { a, useSpring } from '@react-spring/three'
-import { Environment, useTexture } from '@react-three/drei'
+import { useTexture } from '@react-three/drei'
 
-export const DistortedImageScene = ({}) => {
-  const [texture] = useTexture([sunset])
+export const MouseHoverImage = ({}) => {
+  const [texture] = useTexture([greenHorse])
 
   const animation = useSpring({
     from: {
@@ -20,8 +20,9 @@ export const DistortedImageScene = ({}) => {
 
   return (
     <a.group {...animation}>
-      <TitleText>Distorted Image</TitleText>
-      <DescriptionText>
+      <TitleText maxWidth={3}>Mouse Hover Distortion</TitleText>
+
+      <DescriptionText position={[0, 0.001, 1.5]}>
         Distortion effect done by displacing the UV coordinates using a perlin
         noise function.
         {'\n'}
@@ -29,19 +30,21 @@ export const DistortedImageScene = ({}) => {
         Click the image to focus on it.
         {'\n'}
         {'\n'}
-        Hover the image to see the original.
+        Hover the image to displace the image underneath the cursor.
+        {'\n'}
+        {'\n'}
       </DescriptionText>
       <group position={[0, GOLDEN_RATIO / 2, 0]}>
         <Focusable>
-          <DistortedImageCard
-            name="image"
+          <MousePositionDistortedImage
+            name="mouse-position-image"
             scale={[1, GOLDEN_RATIO]}
             texture={texture}
-            castShadow
-            receiveShadow
           />
         </Focusable>
       </group>
     </a.group>
   )
 }
+
+useTexture.preload(greenHorse)
