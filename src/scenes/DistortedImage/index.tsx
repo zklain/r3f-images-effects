@@ -26,10 +26,10 @@ export const DistortedImageScene = ({}) => {
         noise function.
         {'\n'}
         {'\n'}
-        Try hovering the image to see the original.
-        {'\n'}
-        {'\n'}
         Click the image to focus on it.
+        {'\n'}
+        {'\n'}
+        Try hovering the image to see the original.
       </DescriptionText>
       <group position={[0, GOLDEN_RATIO / 2, 0]}>
         <Focusable>
@@ -42,8 +42,6 @@ export const DistortedImageScene = ({}) => {
           />
         </Focusable>
       </group>
-
-      <CameraRig />
     </a.group>
   )
 }

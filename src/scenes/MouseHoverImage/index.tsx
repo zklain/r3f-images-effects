@@ -1,10 +1,10 @@
-import { Environment, Text, useTexture } from '@react-three/drei'
 import { greenHorse } from '@/assets'
 import { CameraRig, Focusable } from '@/components/CameraRig'
-import { a, useSpring } from '@react-spring/three'
-import { DescriptionText, TitleText } from '@/components/SceneTypo'
 import { MousePositionDistortedImage } from '@/components/MousePositionImage'
+import { DescriptionText, TitleText } from '@/components/SceneTypo'
 import { GOLDEN_RATIO } from '@/utils/consts'
+import { a, useSpring } from '@react-spring/three'
+import { useTexture } from '@react-three/drei'
 
 export const MouseHoverImage = ({}) => {
   const [texture] = useTexture([greenHorse])
@@ -27,10 +27,12 @@ export const MouseHoverImage = ({}) => {
         noise function.
         {'\n'}
         {'\n'}
-        Try hovering the image to displace the texture where
-        {'\n'}
-        {'\n'}
         Click the image to focus on it.
+        {'\n'}
+        {'\n'}
+        Try hovering the image to displace the image underneath the cursor.
+        {'\n'}
+        {'\n'}
       </DescriptionText>
       <group position={[0, GOLDEN_RATIO / 2, 0]}>
         <Focusable>
@@ -41,8 +43,6 @@ export const MouseHoverImage = ({}) => {
           />
         </Focusable>
       </group>
-
-      <CameraRig />
     </a.group>
   )
 }

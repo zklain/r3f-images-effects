@@ -1,10 +1,7 @@
-import { GroundGrid } from '@/components/GroundGrid'
-import { Canvas } from '@react-three/fiber'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import './App.css'
-import { INITIAL_CAMERA_POSITION } from './components/CameraRig/Rig'
+import { AppCanvas } from './components/AppCanvas'
 import { routes } from './router/routes'
-import { Environment } from '@react-three/drei'
 
 function App() {
   return (
@@ -19,11 +16,7 @@ function App() {
           ))}
         </nav>
       </header>
-      <Canvas shadows camera={{ fov: 40, position: INITIAL_CAMERA_POSITION }}>
-        <Outlet />
-        <GroundGrid />
-        <Environment preset="city" />
-      </Canvas>
+      <AppCanvas />
     </div>
   )
 }

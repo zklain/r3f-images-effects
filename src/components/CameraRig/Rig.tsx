@@ -1,4 +1,4 @@
-import { CameraControls } from '@react-three/drei'
+import { CameraControls, PerspectiveCamera } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
@@ -41,6 +41,17 @@ export const CameraRig = ({
   }, [selected])
 
   return (
-    <CameraControls makeDefault minPolarAngle={0} maxPolarAngle={Math.PI / 2} />
+    <>
+      <PerspectiveCamera
+        fov={40}
+        makeDefault
+        position={INITIAL_CAMERA_POSITION}
+      />
+      <CameraControls
+        makeDefault
+        minPolarAngle={0}
+        maxPolarAngle={Math.PI / 2}
+      />
+    </>
   )
 }
